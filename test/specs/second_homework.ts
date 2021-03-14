@@ -85,7 +85,7 @@ describe("Items search", function() {
       expect(results).toBeElementsArrayOfSize({ gte: 2 })
     });
   
-    it("should redirect to 'no matching results' in case no items matched @debug", function() {
+    it("should redirect to 'no matching results' in case no items matched", function() {
       browser.url('/index.php?route=common/home')
       const search = $('#search')
       expect(search).toBeDisplayed()
