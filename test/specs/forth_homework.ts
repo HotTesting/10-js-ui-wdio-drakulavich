@@ -1,6 +1,6 @@
 
 // Use http://93.126.97.71:10082/mp3-players to simplify these tests. Mp3 players does not have custom params on details page.
-import {itemByTitle} from '../helpers/util'
+import {selectCategoryAndItem, clearCart} from '../helpers/util'
 // bonus points:
 // - use preconditions
 // - use dataprovider
@@ -23,15 +23,10 @@ describe('Items', function () {
             loginForm.$('#input-email').setValue('jon@snow.com')
             loginForm.$('#input-password').setValue('jon-snow-pass')
             loginForm.$('input[type="submit"]').click()
-            
-            // open mp3 players
-            $('a=MP3 Players').click()
-            const openedSeeAllLink = $('.dropdown.open .see-all')
-            openedSeeAllLink.click()
         });
 
         it('can be added to wishlist', function () {
-            const nano = itemByTitle('iPod Nano')
+            const nano = selectCategoryAndItem('MP3 Players', 'iPod Nano')
             
             nano.$('.fa-heart').click()
 
@@ -41,7 +36,7 @@ describe('Items', function () {
 
          
         it('can be selected for comparison', function () {
-            const nano = itemByTitle('iPod Nano')
+            const nano = selectCategoryAndItem('MP3 Players', 'iPod Nano')
             
             nano.$('.fa-exchange').click()
 
@@ -49,16 +44,21 @@ describe('Items', function () {
             expect(alert).toHaveTextContaining('your product comparison')
         })
 
-        it('can be added to cart', function () {
-            const shuffle = itemByTitle('iPod Shuffle')
+        it('can be added to cart @debug', function () {
+            clearCart()
+            const shuffle = selectCategoryAndItem('MP3 Players', 'iPod Shuffle')
             
             shuffle.$('.fa-shopping-cart').click()
 
-            const alert = $('.alert-success')
+            const alert = $('div#product-category div.alert-success')
             expect(alert).toHaveTextContaining('your shopping cart')
             
             const cart = $('#cart-total i.fa-shopping-cart')
-            expect(cart).toHaveTextContaining('1 item(s)')
+            expect(cart).toBeVisibleInViewport()
+            cart.click()
+
+            const cartDropdown = $('#cart .dropdown-menu')
+            expect(cartDropdown).toHaveTextContaining('iPod Shuffle')
         })
     })
 

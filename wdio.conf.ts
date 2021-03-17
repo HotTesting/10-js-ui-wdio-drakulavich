@@ -90,7 +90,7 @@ export const config: WebdriverIO.Config = {
     // with `/`, the base url gets prepended, not including the path portion of your baseUrl.
     // If your `url` parameter starts without a scheme or `/` (like `some/path`), the base url
     // gets prepended directly.
-    baseUrl: 'http://ip-6147.proline.net.ua:10082/',
+    baseUrl: 'http://93.126.97.71:10082',
     //
     // Default timeout for all waitFor* commands.
     waitforTimeout: 10000,
@@ -184,6 +184,7 @@ export const config: WebdriverIO.Config = {
     before: function (capabilities, specs) {
         beforeEach(function () {
             browser.reloadSession()
+            browser.setWindowSize(1024, 768)
             browser.url('/')
         })
     },
