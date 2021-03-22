@@ -7,7 +7,7 @@ import { App } from '../../application/application';
 
 const app = new App()
 
-describe('Items @debug', function () {
+describe('Items', function () {
     // You must be logged in to use wishlist
     describe('for logged in user', function() {
         beforeEach(function () {
