@@ -15,7 +15,8 @@ export class BillingDetailsComponent {
         region: string
     }) {
         console.log('[BillingDetailsComponent] Filling biling details step', JSON.stringify(data, null, 2))
-        expect(this.root.$('#input-payment-firstname')).toBeClickable()
+
+        expect(this.root.$('#input-payment-firstname')).toBeVisible()
         this.root.$('#input-payment-firstname').setValue(data.firstName)
         this.root.$('#input-payment-lastname').setValue(data.lastName)
         this.root.$('#input-payment-email').setValue(data.email)
@@ -24,9 +25,21 @@ export class BillingDetailsComponent {
         this.root.$('#input-payment-city').setValue(data.city)
         this.root.$('#input-payment-postcode').setValue(data.postCode)
         this.root.$('#input-payment-country').selectByVisibleText(data.country)
-        // FIXME: remove pause
-        browser.pause(500)
-        this.root.$('#input-payment-zone').selectByVisibleText(data.region)
+
+        browser.waitUntil(
+          () => {
+            try {
+              this.root.$('#input-payment-zone').selectByVisibleText(data.region);
+              return true;
+            } catch {
+              return false;
+            }
+          },
+          {
+            timeout: 3000,
+            timeoutMsg: "Expected to selected the city after 3s",
+          }
+        );
     }
 
     continue() {
