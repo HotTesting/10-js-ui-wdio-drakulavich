@@ -9,10 +9,19 @@ export class LoginPage {
     }
 
     loginWithCreds(email:string, password: string) {
-        const loginForm = $("#content .well form");
-        
-        loginForm.$("#input-email").setValue("jon@snow.com");
-        loginForm.$("#input-password").setValue("jon-snow-pass");
-        loginForm.$('input[type="submit"]').click();
+        const user = {
+            email: 'jon@snow.com',
+            password: 'jon-snow-pass'
+        }
+
+        browser.execute(function (_user) {
+            console.dir(_user)
+            const loginForm = "#content .well form";
+
+            document.querySelector(loginForm + ' input#input-email').value = _user.email;
+            document.querySelector(loginForm + ' input#input-password').value = _user.password;
+
+            document.querySelector(loginForm + ' input[type="submit"]').click();
+        }, user)
     }
 }

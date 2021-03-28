@@ -183,7 +183,6 @@ export const config: WebdriverIO.Config = {
      */
     before: function (capabilities, specs) {
         beforeEach(function () {
-            browser.reloadSession()
             browser.setWindowSize(1024, 768)
             browser.url('/')
         })
@@ -221,8 +220,9 @@ export const config: WebdriverIO.Config = {
     /**
      * Function to be executed after a test (in Mocha/Jasmine).
      */
-    // afterTest: function(test, context, { error, result, duration, passed, retries }) {
-    // },
+    afterTest: function(test, context, { error, result, duration, passed, retries }) {
+        browser.reloadSession()
+    },
 
 
     /**
